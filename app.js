@@ -1,11 +1,7 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// 🔥 إعداد Firebase بتاعك (حطيته من كلامك)
 const firebaseConfig = {
   apiKey: "AIzaSyCp-m2DkIIwIoKUeuntHLvDbEclB041pz4",
   authDomain: "shrouk-ehab.firebaseapp.com",
@@ -13,10 +9,22 @@ const firebaseConfig = {
   projectId: "shrouk-ehab",
   storageBucket: "shrouk-ehab.firebasestorage.app",
   messagingSenderId: "1015714183835",
-  appId: "1:1015714183835:web:3d5e2b0f60e781e3f7643e",
-  measurementId: "G-5NVYG4VND5"
+  appId: "1:1015714183835:web:ca1a44d98bb9224ff7643e"
 };
 
-// Initialize Firebase
+// 🔌 تشغيل Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const db = getDatabase(app);
+
+// 📡 جلب بيانات الذهب من Realtime Database
+const goldRef = ref(db, "gold");
+
+onValue(goldRef, (snapshot) => {
+  const data = snapshot.val();
+
+  if (!data) return;
+
+  document.getElementById("g24").innerText = data[24] + " جنيه";
+  document.getElementById("g21").innerText = data[21] + " جنيه";
+  document.getElementById("g18").innerText = data[18] + " جنيه";
+});
