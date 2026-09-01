@@ -21,8 +21,8 @@
             <nav class="nav-links">
                 <a href="#home" class="active">الرئيسية</a>
                 <a href="#categories">الخدمات</a>
-                <a href="#results-section">عرض الخدمات</a>
                 <a href="#add-service">سجّل خدمتك</a>
+                <a href="admin.html" style="color: #e11d48; font-weight: bold;"><i class="fa-solid fa-lock"></i> لوحة الإدارة</a>
             </nav>
             <a href="#add-service" class="btn-primary">أضف خدمة +</a>
         </div>
@@ -52,74 +52,75 @@
         </div>
     </section>
 
-    <!-- التصنيفات المحددة بدون خلط -->
+    <!-- التصنيفات الرئيسية الملونة -->
     <section class="categories" id="categories">
         <div class="container">
             <h2 class="section-title">التصنيفات الرئيسية</h2>
             <div class="categories-grid">
                 
-                <div class="category-card" data-category="نقاشة وديكور">
+                <div class="category-card cat-paint" data-category="نجارة وديكور ونقاشة">
                     <div class="icon"><i class="fa-solid fa-paint-roller"></i></div>
-                    <h3>نقاشة وديكور</h3>
-                    <span>دهانات وديكورات حديثة</span>
+                    <h3>نجارة وديكور ونقاشة</h3>
+                    <span>حرفيون متخصصون</span>
                 </div>
 
-                <div class="category-card" data-category="نجارة وأثاث">
-                    <div class="icon"><i class="fa-solid fa-hammer"></i></div>
-                    <h3>نجارة وأثاث</h3>
-                    <span>تصنيع وصيانة الأثاث والشبابيك</span>
-                </div>
-
-                <div class="category-card" data-category="سباكة">
+                <div class="category-card cat-plumb" data-category="سباكة وكهرباء">
                     <div class="icon"><i class="fa-solid fa-faucet-drip"></i></div>
-                    <h3>سباكة</h3>
-                    <span>تأسيس وصيانة السباكة</span>
+                    <h3>سباكة وكهرباء</h3>
+                    <span>صيانة وتأسيس</span>
                 </div>
 
-                <div class="category-card" data-category="كهرباء منازل">
-                    <div class="icon"><i class="fa-solid fa-bolt"></i></div>
-                    <h3>كهرباء منازل</h3>
-                    <span>تأسيس وصيانة الكهرباء</span>
-                </div>
-
-                <div class="category-card" data-category="أطباء وعيادات">
+                <div class="category-card cat-doctor" data-category="أطباء ومراكز طبية">
                     <div class="icon"><i class="fa-solid fa-user-doctor"></i></div>
-                    <h3>أطباء وعيادات</h3>
-                    <span>كشوفات واستشارات طبية</span>
+                    <h3>أطباء ومراكز طبية</h3>
+                    <span>عيادات ومستشفيات</span>
                 </div>
 
-                <div class="category-card" data-category="صيدليات">
+                <div class="category-card cat-pharmacy" data-category="صيدليات ونوبتجيات">
                     <div class="icon"><i class="fa-solid fa-pills"></i></div>
                     <h3>صيدليات ونوبتجيات</h3>
-                    <span>خدمة وصيدليات 24 ساعة</span>
+                    <span>خدمة 24 ساعة</span>
                 </div>
 
-                <div class="category-card" data-category="مواصلات ونقل">
+                <div class="category-card cat-trans" data-category="مواصلات رحلات ونقل">
                     <div class="icon"><i class="fa-solid fa-bus"></i></div>
-                    <h3>مواصلات ونقل رحلات</h3>
-                    <span>سيارات ونقل ثقيل وبضائع</span>
+                    <h3>مواصلات رحلات ونقل</h3>
+                    <span>سيارات ونقل ثقيل</span>
                 </div>
 
-                <div class="category-card" data-category="صيانة أجهزة منزلية">
+                <div class="category-card cat-repair" data-category="صيانة أجهزة منزلية">
                     <div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
                     <h3>صيانة أجهزة منزلية</h3>
                     <span>غسالات، ثلاجات، تكييف</span>
                 </div>
 
+                <div class="category-card cat-shop" data-category="محلات وأسواق محلية">
+                    <div class="icon"><i class="fa-solid fa-store"></i></div>
+                    <h3>محلات وأسواق محلية</h3>
+                    <span>تجارة ومستلزمات</span>
+                </div>
+
+                <div class="category-card cat-farm" data-category="زراعة وخدمات ريفية">
+                    <div class="icon"><i class="fa-solid fa-wheat-awn"></i></div>
+                    <h3>زراعة وخدمات ريفية</h3>
+                    <span>معدات وعلافة</span>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- قسم نتائج عرض الخدمات المعروضة -->
+    <!-- قسم نتائج عرض المهن المعروضة للزوار -->
     <section class="services-results-section" id="results-section" style="padding: 40px 0; background: #f8f9fa;">
         <div class="container">
             <h2 id="results-title" class="section-title" style="text-align: center; margin-bottom: 25px;">دليل الخدمات المتاحة</h2>
             <div id="servicesContainer" class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-                <!-- تُعرض الخدمات هنا ديناميكياً -->
+                <!-- تُعرض الخدمات هنا -->
             </div>
         </div>
     </section>
 
+    <!-- قسم تسجيل الخدمة -->
     <section class="add-service-section" id="add-service">
         <div class="container">
             <div class="form-wrapper">
@@ -129,25 +130,23 @@
                 <form id="serviceForm">
                     <div class="form-group">
                         <label>الاسم بالكامل / اسم المحل أو العيادة</label>
-                        <input type="text" id="form-name" required placeholder="مثال: أحمد شرف (نقاش وديكورات)">
+                        <input type="text" id="form-name" required placeholder="مثال: أحمد (نقاش وديكورات)">
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label>التصنيف الدقيق للمهنة</label>
+                            <label>التصنيف الرئيسي للمهنة</label>
                             <select id="form-category" required>
                                 <option value="">اختر المهنة بالضبط</option>
-                                <option value="نقاشة وديكور">نقاشة وديكور</option>
-                                <option value="نجارة وأثاث">نجارة وأثاث</option>
-                                <option value="سباكة">سباكة</option>
-                                <option value="كهرباء منازل">كهرباء منازل</option>
-                                <option value="أطباء وعيادات">أطباء وعيادات</option>
-                                <option value="صيدليات">صيدليات</option>
-                                <option value="مواصلات ونقل">مواصلات ونقل رحلات</option>
+                                <option value="نجارة وديكور ونقاشة">نجارة وديكور ونقاشة</option>
+                                <option value="سباكة وكهرباء">سباكة وكهرباء</option>
+                                <option value="أطباء ومراكز طبية">أطباء ومراكز طبية</option>
+                                <option value="صيدليات ونوبتجيات">صيدليات ونوبتجيات</option>
+                                <option value="مواصلات رحلات ونقل">مواصلات رحلات ونقل</option>
                                 <option value="صيانة أجهزة منزلية">صيانة أجهزة منزلية</option>
-                                <option value="محلات وتجارة">محلات وتجارة</option>
-                                <option value="خدمات زراعية">خدمات زراعية</option>
-                                <option value="أخرى">مهن أخرى</option>
+                                <option value="محلات وأسواق محلية">محلات وأسواق محلية</option>
+                                <option value="زراعة وخدمات ريفية">زراعة وخدمات ريفية</option>
+                                <option value="أخرى">أخرى</option>
                             </select>
                         </div>
                         <div class="form-group">
