@@ -5,10 +5,10 @@
     <meta name="google-site-verification" content="kNjuxCEKk2BwQgWCt6FfHQMzv-J0aDZe_x-BLQ2I5RE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- PWA Manifest & Icons -->
+    <!-- PWA Manifest & Icons (تعديل الأيقونة لأيقونة خدمات ودليل احترافي) -->
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#0d6efd">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1048/1048314.png">
+    <meta name="theme-color" content="#2563eb">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3076/3076416.png">
 
     <script>
       let deferredPrompt;
@@ -45,26 +45,24 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
-    <!-- الهيدر بعد إزالة زر الإدارة نهائياً -->
-    <header class="navbar" style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 10px 0;">
-        <div class="container nav-container" style="display: flex; justify-content: space-between; align-items: center; padding: 0 15px; flex-wrap: wrap; gap: 10px;">
+    <!-- الهيدر العلوي: زر أضف خدمة + زر تثبيت التطبيق فقط -->
+    <header class="navbar">
+        <div class="container nav-container">
             <div class="logo">
-                <h2 style="margin:0; font-size: 20px; color: #1e293b;">إيموشا <span style="color: #0d6efd;">خدمتي</span></h2>
-                <small style="color: #64748b; font-size: 11px;">خدمة أهل رشيد ومطوبس وضواحيها</small>
+                <h2>إيموشا <span>خدمتي</span></h2>
+                <small>خدمة أهل رشيد ومطوبس وضواحيها</small>
             </div>
             
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <!-- زر أضف خدمة -->
-                <a href="#add-service" style="background: #0d6efd; color: #ffffff; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+            <div class="custom-nav-btns">
+                <a href="#add-service" class="btn-primary">
                     أضف خدمة +
                 </a>
            
-                <!-- زر تثبيت التطبيق -->
-                <button id="pwaInstallBtn" onclick="installPWA()" style="display: none; background: #f59e0b; color: #ffffff; border: none; padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; align-items: center; gap: 4px;">
+                <button id="pwaInstallBtn" onclick="installPWA()" style="display: none;">
                     📲 تثبيت التطبيق
                 </button>
             </div>
@@ -95,7 +93,7 @@
         </div>
     </section>
 
-    <!-- التصنيفات الرئيسية الملونة -->
+    <!-- التصنيفات الرئيسية -->
     <section class="categories" id="categories">
         <div class="container">
             <h2 class="section-title">التصنيفات الرئيسية</h2>
@@ -232,7 +230,7 @@
     </section>
 
     <!-- الفوتر وبه رابط لوحة الإدارة متداري أسفل الصفحة -->
-    <footer style="background: #0f172a; color: #cbd5e1; padding: 40px 0 20px 0; font-family: 'Cairo', sans-serif;">
+    <footer>
         <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 15px; text-align: center;">
             <h3 style="color: #fff; margin-bottom: 10px;">إيموشا خدمتي</h3>
             <p style="font-size: 14px; color: #94a3b8; max-width: 600px; margin: 0 auto 20px auto;">
@@ -253,7 +251,7 @@
 
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                 <p style="font-size: 13px; margin: 0;">جميع الحقوق محفوظة &copy; 2026 - منصة <strong>إيموشا خدمتي</strong></p>
-                <!-- رابط الإدارة في مكان مخفي ومتداري بالأسفل -->
+                <!-- رابط الإدارة المخفي بالأسفل -->
                 <a href="admin.html" style="color: #475569; text-decoration: none; font-size: 11px;"><i class="fa-solid fa-lock"></i> لوحة التحكم</a>
             </div>
         </div>
