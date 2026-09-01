@@ -1,28 +1,177 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>شروق الذهب</title>
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إيموشا خدمتي - دليل أهالي رشيد ومطوبس والضواحي</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
-<header>
-  <h1>شروق الذهب</h1>
-  <p>أسعار الذهب لحظية</p>
-</header>
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <h2>إيموشا <span>خدمتي</span></h2>
+                <small>خدمة أهل رشيد ومطوبس وضواحيها</small>
+            </div>
+            <nav class="nav-links">
+                <a href="#home" class="active">الرئيسية</a>
+                <a href="#categories">الخدمات</a>
+                <a href="#add-service">سجّل خدمتك</a>
+                <a href="#contact">اتصل بنا</a>
+            </nav>
+            <a href="#add-service" class="btn-primary">أضف خدمة +</a>
+        </div>
+    </header>
 
-<div class="cards">
-  <div>عيار 24: <span id="g24">--</span></div>
-  <div>عيار 21: <span id="g21">--</span></div>
-  <div>عيار 18: <span id="g18">--</span></div>
-</div>
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>دليلك الشامل لجميع خدمات رشيد ومطوبس</h1>
+            <p>ابحث عن أفضل الصنايعية، الأطباء، والمحلات في منطقتك بسرعة وسهولة</p>
+            
+            <div class="search-box">
+                <div class="search-input">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <select id="search-region">
+                        <option value="">كل المناطق (رشيد، مطوبس...)</option>
+                        <option value="rashid">رشيد</option>
+                        <option value="metoubes">مطوبس</option>
+                        <option value="villages">القرى والضواحي</option>
+                    </select>
+                </div>
+                <div class="search-input">
+                    <i class="fa-solid fa-wrench"></i>
+                    <input type="text" id="search-keyword" placeholder="عن ماذا تبحث؟ (نقاش، سباك، طبيب...)">
+                </div>
+                <button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i> بحث</button>
+            </div>
+        </div>
+    </section>
 
-<canvas id="chart"></canvas>
+    <section class="categories" id="categories">
+        <div class="container">
+            <h2 class="section-title">التصنيفات الرئيسية</h2>
+            <div class="categories-grid">
+                
+                <div class="category-card cat-paint">
+                    <div class="icon"><i class="fa-solid fa-paint-roller"></i></div>
+                    <h3>نجارة وديكور ونقاشة</h3>
+                    <span>حرفيون متخصصون</span>
+                </div>
 
-<script type="module" src="app.js"></script>
+                <div class="category-card cat-plumb">
+                    <div class="icon"><i class="fa-solid fa-faucet-drip"></i></div>
+                    <h3>سباكة وكهرباء</h3>
+                    <span>صيانة وتأسيس</span>
+                </div>
+
+                <div class="category-card cat-doctor">
+                    <div class="icon"><i class="fa-solid fa-user-doctor"></i></div>
+                    <h3>أطباء ومراكز طبية</h3>
+                    <span>عيادات ومستشفيات</span>
+                </div>
+
+                <div class="category-card cat-pharmacy">
+                    <div class="icon"><i class="fa-solid fa-pills"></i></div>
+                    <h3>صيدليات ونوبتجيات</h3>
+                    <span>خدمة 24 ساعة</span>
+                </div>
+
+                <div class="category-card cat-trans">
+                    <div class="icon"><i class="fa-solid fa-bus"></i></div>
+                    <h3>مواصلات رحلات ونقل</h3>
+                    <span>سيارات ونقل ثقيل</span>
+                </div>
+
+                <div class="category-card cat-repair">
+                    <div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    <h3>صيانة أجهزة منزلية</h3>
+                    <span>غسالات، ثلاجات، تكييف</span>
+                </div>
+
+                <div class="category-card cat-shop">
+                    <div class="icon"><i class="fa-solid fa-store"></i></div>
+                    <h3>محلات وأسواق محلية</h3>
+                    <span>تجارة ومستلزمات</span>
+                </div>
+
+                <div class="category-card cat-farm">
+                    <div class="icon"><i class="fa-solid fa-wheat-awn"></i></div>
+                    <h3>زراعة وخدمات ريفية</h3>
+                    <span>معدات وعلافة</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="add-service-section" id="add-service">
+        <div class="container">
+            <div class="form-wrapper">
+                <h2>سجّل خدمتك أو مهنتك مجاناً</h2>
+                <p>انضم لدليل أهالي رشيد ومطوبس وسوّق لشغلك ليصل لآلاف المواطنين</p>
+
+                <form id="serviceForm">
+                    <div class="form-group">
+                        <label>الاسم بالكامل / اسم المحل أو العيادة</label>
+                        <input type="text" required placeholder="مثال: م. أحمد (نقاش وديكورات)">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>التصنيف الرئيسي</label>
+                            <select required>
+                                <option value="">اختر التصنيف</option>
+                                <option value="paint">نقاشة وديكور</option>
+                                <option value="plumb">سباكة وكهرباء</option>
+                                <option value="doctor">أطباء وعيادات</option>
+                                <option value="repair">صيانة أجهزة</option>
+                                <option value="trans">مواصلات ونقل</option>
+                                <option value="other">أخرى</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>المنطقة / المدينة</label>
+                            <select required>
+                                <option value="">اختر المنطقة</option>
+                                <option value="rashid">رشيد</option>
+                                <option value="metoubes">مطوبس</option>
+                                <option value="village">القرى المجاورة</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>رقم الهاتف للاتصال</label>
+                            <input type="tel" required placeholder="010xxxxxxx">
+                        </div>
+                        <div class="form-group">
+                            <label>رقم الواتساب</label>
+                            <input type="tel" placeholder="010xxxxxxx">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>تفاصيل الخدمة / الخبرة</label>
+                        <textarea rows="4" placeholder="اكتب نبذة مختصرة عن الخدمات التي تقدمها وخبرتك..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">إرسال الخدمة للمراجعة والنشر</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <p>جميع الحقوق محفوظة &copy; 2026 - منصة <strong>إيموشا خدمتي</strong> (إحدى مشاريع سلسلة إيموشا)</p>
+        </div>
+    </footer>
 
 </body>
 </html>
