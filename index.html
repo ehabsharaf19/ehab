@@ -9,22 +9,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-mobile-btn {
+            background: #ffe4e6;
+            color: #e11d48;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid #fecdd3;
+        }
+    </style>
 </head>
 <body>
 
     <header class="navbar">
-        <div class="container nav-container">
+        <div class="container nav-container" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 15px;">
             <div class="logo">
-                <h2>إيموشا <span>خدمتي</span></h2>
+                <h2 style="margin:0;">إيموشا <span>خدمتي</span></h2>
                 <small>خدمة أهل رشيد ومطوبس وضواحيها</small>
             </div>
-            <nav class="nav-links">
-                <a href="#home" class="active">الرئيسية</a>
-                <a href="#categories">الخدمات</a>
-                <a href="#add-service">سجّل خدمتك</a>
-                <a href="admin.html" style="color: #e11d48; font-weight: bold;"><i class="fa-solid fa-lock"></i> لوحة الإدارة</a>
-            </nav>
-            <a href="#add-service" class="btn-primary">أضف خدمة +</a>
+            
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <!-- زر الإدارة يظهر بوضوح على الموبايل والكمبيوتر -->
+                <a href="admin.html" class="admin-mobile-btn"><i class="fa-solid fa-lock"></i> الإدارة</a>
+                <a href="#add-service" class="btn-primary" style="padding: 6px 12px; font-size: 13px;">أضف خدمة +</a>
+            </div>
         </div>
     </header>
 
@@ -45,7 +59,7 @@
                 </div>
                 <div class="search-input">
                     <i class="fa-solid fa-wrench"></i>
-                    <input type="text" id="search-keyword" placeholder="عن ماذا تبحث؟ (نقاش، سباك، طبيب...)">
+                    <input type="text" id="search-keyword" placeholder="عن ماذا تبحث؟ (نقاش، سباك، ستائر...)">
                 </div>
                 <button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i> بحث</button>
             </div>
@@ -106,6 +120,13 @@
                     <span>معدات وعلافة</span>
                 </div>
 
+                <!-- قسم أخرى للستاير والخدمات المتنوعة -->
+                <div class="category-card cat-other" data-category="أخرى" style="background: #f3e8ff; border: 1px solid #d8b4fe;">
+                    <div class="icon" style="color: #9333ea;"><i class="fa-solid fa-ellipsis"></i></div>
+                    <h3>خدمات وأنشطة أخرى</h3>
+                    <span>ستائر، تنجيد، خدمات متنوعة</span>
+                </div>
+
             </div>
         </div>
     </section>
@@ -130,7 +151,7 @@
                 <form id="serviceForm">
                     <div class="form-group">
                         <label>الاسم بالكامل / اسم المحل أو العيادة</label>
-                        <input type="text" id="form-name" required placeholder="مثال: أحمد (نقاش وديكورات)">
+                        <input type="text" id="form-name" required placeholder="مثال: أحمد (تركيب ستائر وديكورات)">
                     </div>
 
                     <div class="form-row">
@@ -146,7 +167,7 @@
                                 <option value="صيانة أجهزة منزلية">صيانة أجهزة منزلية</option>
                                 <option value="محلات وأسواق محلية">محلات وأسواق محلية</option>
                                 <option value="زراعة وخدمات ريفية">زراعة وخدمات ريفية</option>
-                                <option value="أخرى">أخرى</option>
+                                <option value="أخرى">أخرى (ستائر، تنجيد، إلخ...)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -184,7 +205,7 @@
 
     <footer>
         <div class="container footer-content">
-            <p>جميع الحقوق محفوظة &copy; 2026 - منصة <strong>إيموشا خدمتي</strong> (إحدى مشاريع سلسلة إيموشا)</p>
+            <p>جميع الحقوق محفوظة &copy; 2026 - منصة <strong>إيموشا خدمتي</strong></p>
         </div>
     </footer>
 
