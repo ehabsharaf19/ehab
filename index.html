@@ -4,94 +4,80 @@
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="kNjuxCEKk2BwQgWCt6FfHQMzv-J0aDZe_x-BLQ2I5RE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- PWA Manifest & Icons -->
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#0d6efd">
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1048/1048314.png">
 
-<script>
-  // تسجيل Service Worker
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js');
-    });
-  }
+    <!-- PWA Manifest & Icons -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1048/1048314.png">
 
-  // كود التثبيت التلقائي عبر الزر
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    const installBtn = document.getElementById('pwaInstallBtn');
-    if (installBtn) {
-      installBtn.style.display = 'inline-block';
-    }
-  });
+    <script>
+      let deferredPrompt;
 
-  function installPWA() {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js');
+        });
+      }
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        const installBtn = document.getElementById('pwaInstallBtn');
+        if (installBtn) {
+          installBtn.style.display = 'inline-flex';
         }
-        deferredPrompt = null;
       });
-    }
-  }
-</script>
+
+      function installPWA() {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('تم التثبيت بنجاح');
+            }
+            deferredPrompt = null;
+          });
+        }
+      }
+    </script>
 
     <title>إيموشا خدمتي - دليل أهالي رشيد ومطوبس والضواحي</title>
     
-
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="style.css">
+
+    <!-- إصلاح تداخل الأزرار في الهيدر -->
     <style>
-        .admin-mobile-btn {
-            background: #ffe4e6;
-            color: #e11d48;
-            padding: 6px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            border: 1px solid #fecdd3;
+        .custom-nav-btns a, .custom-nav-btns button {
+            all: unset;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
         }
     </style>
 </head>
 <body>
 
-        <header class="navbar" style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 10px 0;">
-        <div class="container nav-container" style="display: flex; justify-content: space-between; align-items: center; padding: 0 15px; flex-wrap: wrap; gap: 10px;">
+    <header style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 12px 0;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 0 15px; flex-wrap: wrap; gap: 10px;">
             <div class="logo">
                 <h2 style="margin:0; font-size: 20px; color: #1e293b;">إيموشا <span style="color: #0d6efd;">خدمتي</span></h2>
                 <small style="color: #64748b; font-size: 11px;">خدمة أهل رشيد ومطوبس وضواحيها</small>
             </div>
             
-            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
-                <!-- زر الإدارة -->
-                <a href="admin.html" style="background: #ffe4e6; color: #e11d48; padding: 5px 9px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; border: 1px solid #fecdd3; display: inline-flex; align-items: center; gap: 4px;">
-                    <i class="fa-solid fa-lock"></i> الإدارة
-                </a>
-
+            <div class="custom-nav-btns" style="display: flex; align-items: center; gap: 8px;">
                 <!-- زر أضف خدمة -->
-                <a href="#add-service" style="background: #0d6efd; color: #ffffff; padding: 5px 9px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+                <a href="#add-service" style="background: #0d6efd; color: #ffffff; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
                     أضف خدمة +
                 </a>
            
-                <!-- زر تثبيت التطبيق -->
-                <button id="pwaInstallBtn" onclick="installPWA()" style="display: none; background: #f59e0b; color: #ffffff; border: none; padding: 5px 9px; font-size: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; align-items: center; gap: 4px;">
+                <!-- زر تثبيت التطبيق الأنيق -->
+                <button id="pwaInstallBtn" onclick="installPWA()" style="display: none; background: #f59e0b; color: #ffffff; padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; align-items: center; gap: 4px;">
                     📲 تثبيت التطبيق
                 </button>
             </div>
         </div>
     </header>
-
 
     <section class="hero" id="home">
         <div class="container hero-content">
@@ -171,7 +157,6 @@
                     <span>معدات وعلافة</span>
                 </div>
 
-                <!-- قسم أخرى للستاير والخدمات المتنوعة -->
                 <div class="category-card cat-other" data-category="أخرى" style="background: #f3e8ff; border: 1px solid #d8b4fe;">
                     <div class="icon" style="color: #9333ea;"><i class="fa-solid fa-ellipsis"></i></div>
                     <h3>خدمات وأنشطة أخرى</h3>
@@ -182,12 +167,11 @@
         </div>
     </section>
 
-    <!-- قسم نتائج عرض المهن المعروضة للزوار -->
+    <!-- قسم نتائج عرض المهن -->
     <section class="services-results-section" id="results-section" style="padding: 40px 0; background: #f8f9fa;">
         <div class="container">
             <h2 id="results-title" class="section-title" style="text-align: center; margin-bottom: 25px;">دليل الخدمات المتاحة</h2>
             <div id="servicesContainer" class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-                <!-- تُعرض الخدمات هنا -->
             </div>
         </div>
     </section>
@@ -254,14 +238,14 @@
         </div>
     </section>
 
-        <footer style="background: #0f172a; color: #cbd5e1; padding: 40px 0 20px 0; font-family: 'Cairo', sans-serif;">
+    <!-- الفوتر بعد إخفاء رابط الإدارة في الأسفل بأسلوب متناسق -->
+    <footer style="background: #0f172a; color: #cbd5e1; padding: 40px 0 20px 0; font-family: 'Cairo', sans-serif;">
         <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 15px; text-align: center;">
             <h3 style="color: #fff; margin-bottom: 10px;">إيموشا خدمتي</h3>
             <p style="font-size: 14px; color: #94a3b8; max-width: 600px; margin: 0 auto 20px auto;">
                 الدليل التجاري والخدمي الشامل لأهالي رشيد ومطوبس والضواحي، يربط بين المواطنين وأفضل الصنايعية والأطباء والخدمات المحلية.
             </p>
             
-            <!-- روابط صفحات أدسنس الأساسية -->
             <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 25px;">
                 <a href="about.html" style="color: #38bdf8; text-decoration: none; font-size: 14px; font-weight: bold;">من نحن</a>
                 <span style="color: #475569;">|</span>
@@ -274,10 +258,13 @@
 
             <hr style="border: 0; border-top: 1px solid #334155; margin-bottom: 20px;">
 
-            <p style="font-size: 13px; margin: 0;">جميع الحقوق محفوظة &copy; 2026 - منصة <strong>إيموشا خدمتي</strong></p>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <p style="font-size: 13px; margin: 0;">جميع الحقوق محفوظة &copy; 2026 - منصة <strong>إيموشا خدمتي</strong></p>
+                <!-- رابط الإدارة مخفي بشكل شيك وغير ملفت للمستخدمين العاديين -->
+                <a href="admin.html" style="color: #475569; text-decoration: none; font-size: 12px;"><i class="fa-solid fa-lock"></i> لوحة التحكم</a>
+            </div>
         </div>
     </footer>
-
 
     <script type="module" src="app.js"></script>
 </body>
