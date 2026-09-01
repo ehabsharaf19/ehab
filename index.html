@@ -73,15 +73,19 @@
                 <small>خدمة أهل رشيد ومطوبس وضواحيها</small>
             </div>
             
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <!-- زر الإدارة يظهر بوضوح على الموبايل والكمبيوتر -->
-                <a href="admin.html" class="admin-mobile-btn"><i class="fa-solid fa-lock"></i> الإدارة</a>
-                <a href="#add-service" class="btn-primary" style="padding: 6px 12px; font-size: 13px;">أضف خدمة +</a>
-           <button id="pwaInstallBtn" onclick="installPWA()" class="btn btn-warning fw-bold ms-2" style="display: none;">
-  📲 تثبيت التطبيق
-</button>
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+    <!-- زر الإدارة -->
+    <a href="admin.html" class="admin-mobile-btn"><i class="fa-solid fa-lock"></i> الإدارة</a>
+    
+    <!-- زر أضف خدمة -->
+    <a href="#add-service" class="btn-primary" style="padding: 6px 10px; font-size: 12px; border-radius: 6px; text-decoration: none;">أضف خدمة +</a>
+    
+    <!-- زر تثبيت التطبيق المعدل وشكله فخم -->
+    <button id="pwaInstallBtn" onclick="installPWA()" style="display: none; background: #f59e0b; color: #fff; border: none; padding: 6px 10px; font-size: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); align-items: center; gap: 4px;">
+        <i class="fa-solid fa-mobile-screen-button"></i> تثبيت التطبيق
+    </button>
+</div>
 
-            </div>
         </div>
     </header>
 
