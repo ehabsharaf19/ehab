@@ -20,7 +20,7 @@ body {
 /* Header & Navbar */
 .navbar {
     background-color: #ffffff;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-bottom: 1px solid #e2e8f0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -30,14 +30,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
+    padding: 10px 15px;
     flex-wrap: wrap;
     gap: 10px;
 }
 
 .logo h2 {
     color: #0f172a;
-    font-size: 22px;
+    font-size: 20px;
     margin: 0;
 }
 
@@ -51,62 +51,46 @@ body {
     font-size: 11px;
 }
 
-.nav-links a {
-    text-decoration: none;
-    color: #475569;
-    margin: 0 15px;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.nav-links a:hover, .nav-links a.active {
-    color: #2563eb;
-}
-
-/* Header Buttons Layout Fix */
+/* Header Buttons Layout */
 .custom-nav-btns {
     display: flex !important;
     align-items: center !important;
     gap: 8px !important;
-    flex-wrap: nowrap !important;
-}
-
-.custom-nav-btns a, 
-.custom-nav-btns button {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 6px 12px !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    border-radius: 6px !important;
-    text-decoration: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    cursor: pointer !important;
-    white-space: nowrap !important;
-    height: auto !important;
-    width: auto !important;
 }
 
 .btn-primary {
-    background-color: #2563eb;
-    color: #fff;
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    padding: 6px 14px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
     transition: 0.3s;
 }
 
 .btn-primary:hover {
-    background-color: #1d4ed8;
+    background-color: #1d4ed8 !important;
 }
 
 #pwaInstallBtn {
-    background-color: #f59e0b;
-    color: #ffffff;
+    background-color: #f59e0b !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 6px 14px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    display: inline-flex;
+    align-items: center !important;
     transition: 0.3s;
 }
 
 #pwaInstallBtn:hover {
-    background-color: #d97706;
+    background-color: #d97706 !important;
 }
 
 /* Hero Section */
@@ -324,10 +308,8 @@ input:focus, select:focus, textarea:focus {
 /* Footer */
 footer {
     background: #0f172a;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-    font-size: 14px;
+    color: #cbd5e1;
+    padding: 40px 0 20px 0;
 }
 
 /* Responsive Design */
@@ -338,9 +320,6 @@ footer {
     .form-row {
         flex-direction: column;
         gap: 0;
-    }
-    .nav-links {
-        display: none;
     }
     .logo h2 {
         font-size: 18px;
