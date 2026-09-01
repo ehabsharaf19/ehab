@@ -5,7 +5,7 @@
     <meta name="google-site-verification" content="kNjuxCEKk2BwQgWCt6FfHQMzv-J0aDZe_x-BLQ2I5RE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- PWA Manifest & Icons (تعديل الأيقونة لأيقونة خدمات ودليل احترافي) -->
+    <!-- PWA Manifest & Icons -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#2563eb">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3076/3076416.png">
@@ -49,7 +49,7 @@
 </head>
 <body>
 
-    <!-- الهيدر العلوي: زر أضف خدمة + زر تثبيت التطبيق فقط -->
+    <!-- الهيدر العلوي -->
     <header class="navbar">
         <div class="container nav-container">
             <div class="logo">
@@ -72,21 +72,30 @@
     <section class="hero" id="home">
         <div class="container hero-content">
             <h1>دليلك الشامل لجميع خدمات رشيد ومطوبس</h1>
-            <p>ابحث عن أفضل الصنايعية، الأطباء، والمحلات في منطقتك بسرعة وسهولة</p>
+            <p>ابحث عن أفضل الصنايعية، الأطباء، الفنيين، والورش في منطقتك بسرعة وسهولة</p>
             
             <div class="search-box">
                 <div class="search-input">
                     <i class="fa-solid fa-location-dot"></i>
                     <select id="search-region">
-                        <option value="">كل المناطق (رشيد، مطوبس...)</option>
-                        <option value="رشيد">رشيد</option>
-                        <option value="مطوبس">مطوبس</option>
-                        <option value="القرى والضواحي">القرى والضواحي</option>
+                        <option value="">كل المناطق والقرى...</option>
+                        <option value="رشيد">مدينة رشيد</option>
+                        <option value="مطوبس">مدينة مطوبس</option>
+                        <option value="خان الجني">خان الجني</option>
+                        <option value="الجزيرة الخضراء">الجزيرة الخضراء</option>
+                        <option value="الجدية">الجدية</option>
+                        <option value="معدية رشيد">معدية رشيد</option>
+                        <option value="برمبال">برمبال</option>
+                        <option value="إدفينا">إدفينا</option>
+                        <option value="السكري">السكري</option>
+                        <option value="ديبي">ديبي</option>
+                        <option value="المنية">المنية</option>
+                        <option value="القرى والضواحي الأخري">باقي القرى والضواحي</option>
                     </select>
                 </div>
                 <div class="search-input">
                     <i class="fa-solid fa-wrench"></i>
-                    <input type="text" id="search-keyword" placeholder="عن ماذا تبحث؟ (نقاش، سباك، ستائر...)">
+                    <input type="text" id="search-keyword" placeholder="عن ماذا تبحث؟ (شبكات، كاميرات، حدادة، نقاش...)">
                 </div>
                 <button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i> بحث</button>
             </div>
@@ -102,13 +111,25 @@
                 <div class="category-card cat-paint" data-category="نجارة وديكور ونقاشة">
                     <div class="icon"><i class="fa-solid fa-paint-roller"></i></div>
                     <h3>نجارة وديكور ونقاشة</h3>
-                    <span>حرفيون متخصصون</span>
+                    <span>تشطيبات ودهانات</span>
                 </div>
 
                 <div class="category-card cat-plumb" data-category="سباكة وكهرباء">
                     <div class="icon"><i class="fa-solid fa-faucet-drip"></i></div>
                     <h3>سباكة وكهرباء</h3>
                     <span>صيانة وتأسيس</span>
+                </div>
+
+                <div class="category-card cat-tech" data-category="شبكات ودش وكاميرات مراقبة" style="background: #e0f2fe; border: 1px solid #7dd3fc;">
+                    <div class="icon" style="color: #0284c7;"><i class="fa-solid fa-network-wired"></i></div>
+                    <h3>شبكات وكاميرات ودش</h3>
+                    <span>مهندسين وفنيين شبكات</span>
+                </div>
+
+                <div class="category-card cat-metal" data-category="حدادة وكيرتيلات وألوميتال" style="background: #f1f5f9; border: 1px solid #cbd5e1;">
+                    <div class="icon" style="color: #475569;"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    <h3>حدادة وكيرتيلات وألوميتال</h3>
+                    <span>ورش تصنيع وصيانة</span>
                 </div>
 
                 <div class="category-card cat-doctor" data-category="أطباء ومراكز طبية">
@@ -130,7 +151,7 @@
                 </div>
 
                 <div class="category-card cat-repair" data-category="صيانة أجهزة منزلية">
-                    <div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    <div class="icon"><i class="fa-solid fa-plug"></i></div>
                     <h3>صيانة أجهزة منزلية</h3>
                     <span>غسالات، ثلاجات، تكييف</span>
                 </div>
@@ -176,8 +197,8 @@
 
                 <form id="serviceForm">
                     <div class="form-group">
-                        <label>الاسم بالكامل / اسم المحل أو العيادة</label>
-                        <input type="text" id="form-name" required placeholder="مثال: أحمد (تركيب ستائر وديكورات)">
+                        <label>الاسم بالكامل / اسم المحل أو الورشة أو الشركة</label>
+                        <input type="text" id="form-name" required placeholder="مثال: م/ أحمد (مهندس شبكات) أو ورشة النور للكيرتيل">
                     </div>
 
                     <div class="form-row">
@@ -185,6 +206,8 @@
                             <label>التصنيف الرئيسي للمهنة</label>
                             <select id="form-category" required>
                                 <option value="">اختر المهنة بالضبط</option>
+                                <option value="شبكات ودش وكاميرات مراقبة">شبكات ودش وكاميرات مراقبة (مهندسين وفنيين)</option>
+                                <option value="حدادة وكيرتيلات وألوميتال">حدادة وكيرتيلات وألوميتال (ورش وصيانة)</option>
                                 <option value="نجارة وديكور ونقاشة">نجارة وديكور ونقاشة</option>
                                 <option value="سباكة وكهرباء">سباكة وكهرباء</option>
                                 <option value="أطباء ومراكز طبية">أطباء ومراكز طبية</option>
@@ -193,16 +216,25 @@
                                 <option value="صيانة أجهزة منزلية">صيانة أجهزة منزلية</option>
                                 <option value="محلات وأسواق محلية">محلات وأسواق محلية</option>
                                 <option value="زراعة وخدمات ريفية">زراعة وخدمات ريفية</option>
-                                <option value="أخرى">أخرى (باقي الحرف والمهن ، إلخ...)</option>
+                                <option value="أخرى">أخرى (باقي الحرف والمهن...)</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>المنطقة / المدينة</label>
+                            <label>المنطقة / البلدة</label>
                             <select id="form-region" required>
-                                <option value="">اختر المنطقة</option>
-                                <option value="رشيد">رشيد</option>
-                                <option value="مطوبس">مطوبس</option>
-                                <option value="القرى والضواحي">القرى والضواحي</option>
+                                <option value="">اختر البلدة / المنطقة</option>
+                                <option value="رشيد">مدينة رشيد</option>
+                                <option value="مطوبس">مدينة مطوبس</option>
+                                <option value="خان الجني">خان الجني</option>
+                                <option value="الجزيرة الخضراء">الجزيرة الخضراء</option>
+                                <option value="الجدية">الجدية</option>
+                                <option value="معدية رشيد">معدية رشيد</option>
+                                <option value="برمبال">برمبال</option>
+                                <option value="إدفينا">إدفينا</option>
+                                <option value="السكري">السكري</option>
+                                <option value="ديبي">ديبي</option>
+                                <option value="المنية">المنية</option>
+                                <option value="القرى والضواحي الأخري">قرى وضواحي أخرى</option>
                             </select>
                         </div>
                     </div>
@@ -220,7 +252,7 @@
 
                     <div class="form-group">
                         <label>تفاصيل الخدمة / الخبرة</label>
-                        <textarea id="form-description" rows="4" placeholder="اكتب نبذة مختصرة عن الخدمات التي تقدمها وخبرتك..."></textarea>
+                        <textarea id="form-description" rows="4" placeholder="اكتب تفاصيل الخدمة (مثال: تركيب كاميرات مراقبة، برمجة شبكات، تصنيع كيرتيلات وابواب حديد...)"></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit">إرسال الخدمة للنشر</button>
@@ -229,12 +261,12 @@
         </div>
     </section>
 
-        <!-- الفوتر وبه رابط لوحة الإدارة متداري أسفل الصفحة -->
+    <!-- الفوتر -->
     <footer>
         <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 15px; text-align: center;">
             <h3 style="color: #fff; margin-bottom: 10px;">إيموشا خدمتي</h3>
             <p style="font-size: 14px; color: #94a3b8; max-width: 600px; margin: 0 auto 20px auto;">
-                الدليل التجاري والخدمي الشامل لأهالي رشيد ومطوبس والضواحي، يربط بين المواطنين وأفضل الصنايعية والأطباء والخدمات المحلية.
+                الدليل التجاري والخدمي الشامل لأهالي رشيد ومطوبس والضواحي، يربط بين المواطنين وأفضل الصنايعية والأطباء والمهندسين والخدمات المحلية.
             </p>
             
             <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 25px;">
@@ -252,7 +284,6 @@
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                 <p style="font-size: 13px; margin: 0;">جميع الحقوق محفوظة &copy; 2026 - منصة <strong>إيموشا خدمتي</strong></p>
 
-                <!-- رابط الإدارة المظبوط بالأسفل -->
                 <a href="admin.html" style="color: #64748b; text-decoration: none; font-size: 12px; font-weight: bold; padding: 4px 8px; border: 1px dashed #475569; border-radius: 4px;">
                     <i class="fa-solid fa-lock"></i> لوحة التحكم
                 </a>
