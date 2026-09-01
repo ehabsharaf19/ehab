@@ -33,7 +33,7 @@
           deferredPrompt.prompt();
           deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
-              console.log('تم التثبيت بنجاح');
+              console.log('User accepted the install prompt');
             }
             deferredPrompt = null;
           });
@@ -46,39 +46,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-
-    <!-- إصلاح تداخل الأزرار في الهيدر -->
-    <style>
-        .custom-nav-btns a, .custom-nav-btns button {
-            all: unset;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
-    </style>
 </head>
 <body>
 
-    <header style="background: #ffffff !important; border-bottom: 1px solid #e2e8f0 !important; padding: 10px 0 !important; height: auto !important;">
-    <div class="container" style="display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 0 15px !important; flex-wrap: wrap !important; gap: 10px !important;">
-        <div class="logo">
-            <h2 style="margin:0 !important; font-size: 18px !important; color: #1e293b !important; display: block !important;">إيموشا <span style="color: #0d6efd !important;">خدمتي</span></h2>
-            <small style="color: #64748b !important; font-size: 10px !important; display: block !important;">خدمة أهل رشيد ومطوبس وضواحيها</small>
+    <!-- الهيدر بعد إزالة زر الإدارة نهائياً -->
+    <header class="navbar" style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 10px 0;">
+        <div class="container nav-container" style="display: flex; justify-content: space-between; align-items: center; padding: 0 15px; flex-wrap: wrap; gap: 10px;">
+            <div class="logo">
+                <h2 style="margin:0; font-size: 20px; color: #1e293b;">إيموشا <span style="color: #0d6efd;">خدمتي</span></h2>
+                <small style="color: #64748b; font-size: 11px;">خدمة أهل رشيد ومطوبس وضواحيها</small>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <!-- زر أضف خدمة -->
+                <a href="#add-service" style="background: #0d6efd; color: #ffffff; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+                    أضف خدمة +
+                </a>
+           
+                <!-- زر تثبيت التطبيق -->
+                <button id="pwaInstallBtn" onclick="installPWA()" style="display: none; background: #f59e0b; color: #ffffff; border: none; padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; align-items: center; gap: 4px;">
+                    📲 تثبيت التطبيق
+                </button>
+            </div>
         </div>
-        
-        <div style="display: flex !important; align-items: center !important; gap: 6px !important; flex-direction: row !important;">
-            <!-- زر أضف خدمة -->
-            <a href="#add-service" style="background: #0d6efd !important; color: #ffffff !important; padding: 6px 10px !important; border-radius: 6px !important; text-decoration: none !important; font-size: 12px !important; font-weight: bold !important; display: inline-block !important; border: none !important; width: auto !important; height: auto !important; line-height: normal !important;">
-                أضف خدمة +
-            </a>
-       
-            <!-- زر تثبيت التطبيق -->
-            <button id="pwaInstallBtn" onclick="installPWA()" style="display: none; background: #f59e0b !important; color: #ffffff !important; padding: 6px 10px !important; border-radius: 6px !important; font-size: 12px !important; font-weight: bold !important; border: none !important; cursor: pointer !important; width: auto !important; height: auto !important; line-height: normal !important;">
-                📲 تثبيت التطبيق
-            </button>
-        </div>
-    </div>
-</header>
-
+    </header>
 
     <section class="hero" id="home">
         <div class="container hero-content">
@@ -173,6 +164,7 @@
         <div class="container">
             <h2 id="results-title" class="section-title" style="text-align: center; margin-bottom: 25px;">دليل الخدمات المتاحة</h2>
             <div id="servicesContainer" class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+                <!-- تُعرض الخدمات هنا -->
             </div>
         </div>
     </section>
@@ -239,7 +231,7 @@
         </div>
     </section>
 
-    <!-- الفوتر بعد إخفاء رابط الإدارة في الأسفل بأسلوب متناسق -->
+    <!-- الفوتر وبه رابط لوحة الإدارة متداري أسفل الصفحة -->
     <footer style="background: #0f172a; color: #cbd5e1; padding: 40px 0 20px 0; font-family: 'Cairo', sans-serif;">
         <div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 15px; text-align: center;">
             <h3 style="color: #fff; margin-bottom: 10px;">إيموشا خدمتي</h3>
@@ -261,8 +253,8 @@
 
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                 <p style="font-size: 13px; margin: 0;">جميع الحقوق محفوظة &copy; 2026 - منصة <strong>إيموشا خدمتي</strong></p>
-                <!-- رابط الإدارة مخفي بشكل شيك وغير ملفت للمستخدمين العاديين -->
-                <a href="admin.html" style="color: #475569; text-decoration: none; font-size: 12px;"><i class="fa-solid fa-lock"></i> لوحة التحكم</a>
+                <!-- رابط الإدارة في مكان مخفي ومتداري بالأسفل -->
+                <a href="admin.html" style="color: #475569; text-decoration: none; font-size: 11px;"><i class="fa-solid fa-lock"></i> لوحة التحكم</a>
             </div>
         </div>
     </footer>
