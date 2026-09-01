@@ -1,14 +1,14 @@
 {
   "short_name": "إيموشا خدمتي",
-  "name": "إيموشا خدمتي - دليل الخدمات المحلي",
+  "name": "إيموشا خدمتي - دليل خدمات رشيد ومطوبس",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/1048/1048314.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/1048/1048314.png",
       "type": "image/png",
       "sizes": "512x512"
     }
