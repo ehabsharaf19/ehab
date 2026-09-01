@@ -4,7 +4,23 @@
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="kNjuxCEKk2BwQgWCt6FfHQMzv-J0aDZe_x-BLQ2I5RE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- PWA Manifest & Theme Color -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0d6efd">
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('Service Worker Registered'))
+        .catch(err => console.log('Service Worker Error', err));
+    });
+  }
+</script>
+
     <title>إيموشا خدمتي - دليل أهالي رشيد ومطوبس والضواحي</title>
+    
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
