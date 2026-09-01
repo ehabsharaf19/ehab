@@ -1,21 +1,21 @@
 {
   "short_name": "إيموشا خدمتي",
-  "name": "إيموشا خدمتي - دليل خدمات رشيد ومطوبس",
+  "name": "إيموشا خدمتي - دليل أهالي رشيد ومطوبس",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/1048/1048314.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "https://cdn-icons-png.flaticon.com/512/3076/3076416.png",
+      "sizes": "192x192",
+      "type": "image/png"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/1048/1048314.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "https://cdn-icons-png.flaticon.com/512/3076/3076416.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
-  ],
-  "start_url": "/",
-  "background_color": "#ffffff",
-  "theme_color": "#0d6efd",
-  "display": "standalone",
-  "orientation": "portrait"
+  ]
 }
