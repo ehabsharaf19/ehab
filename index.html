@@ -4,18 +4,40 @@
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="kNjuxCEKk2BwQgWCt6FfHQMzv-J0aDZe_x-BLQ2I5RE" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <!-- PWA Manifest & Theme Color -->
+<!-- PWA Manifest & Icons -->
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0d6efd">
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/1048/1048314.png">
 
 <script>
+  // تسجيل Service Worker
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('Service Worker Registered'))
-        .catch(err => console.log('Service Worker Error', err));
+      navigator.serviceWorker.register('/sw.js');
     });
+  }
+
+  // كود التثبيت التلقائي عبر الزر
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const installBtn = document.getElementById('pwaInstallBtn');
+    if (installBtn) {
+      installBtn.style.display = 'inline-block';
+    }
+  });
+
+  function installPWA() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User accepted the install prompt');
+        }
+        deferredPrompt = null;
+      });
+    }
   }
 </script>
 
@@ -55,6 +77,10 @@
                 <!-- زر الإدارة يظهر بوضوح على الموبايل والكمبيوتر -->
                 <a href="admin.html" class="admin-mobile-btn"><i class="fa-solid fa-lock"></i> الإدارة</a>
                 <a href="#add-service" class="btn-primary" style="padding: 6px 12px; font-size: 13px;">أضف خدمة +</a>
+           <button id="pwaInstallBtn" onclick="installPWA()" class="btn btn-warning fw-bold ms-2" style="display: none;">
+  📲 تثبيت التطبيق
+</button>
+
             </div>
         </div>
     </header>
