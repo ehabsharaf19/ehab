@@ -22,18 +22,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// عناصر الشاشة
-const servicesContainer = document.getElementById('servicesContainer') || document.querySelector('.services-grid');
+const servicesContainer = document.getElementById('servicesContainer');
 const serviceForm = document.getElementById('serviceForm');
 const btnSearch = document.querySelector('.btn-search');
 const regionSelect = document.getElementById('search-region');
 const keywordInput = document.getElementById('search-keyword');
 
-// 1. جلب وعرض الخدمات المقبولة فقط (Approved)
+// جلب وعرض الخدمات المقبولة
 async function loadApprovedServices(categoryFilter = null, regionFilter = null, keywordFilter = "") {
     if (!servicesContainer) return;
     
-    servicesContainer.innerHTML = '<p style="text-align:center; width:100%;">جاري تحميل الخدمات...</p>';
+    servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1;">جاري تحميل الخدمات...</p>';
 
     try {
         let q = query(collection(db, "services"), where("status", "==", "approved"));
@@ -41,46 +40,49 @@ async function loadApprovedServices(categoryFilter = null, regionFilter = null, 
         if (regionFilter) {
             q = query(q, where("region", "==", regionFilter));
         }
-        if (categoryFilter) {
-            q = query(q, where("category", "==", categoryFilter));
-        }
 
         const querySnapshot = await getDocs(q);
         servicesContainer.innerHTML = '';
 
-        if (querySnapshot.empty) {
-            servicesContainer.innerHTML = '<p style="text-align:center; width:100%;">لا توجد خدمات معتمدة حالياً في هذا التصنيف.</p>';
-            return;
-        }
+        let hasData = false;
 
         querySnapshot.forEach((doc) => {
             const data = doc.data();
             const keyword = keywordFilter.toLowerCase();
             
-            if (!keyword || data.name.toLowerCase().includes(keyword) || (data.description && data.description.toLowerCase().includes(keyword))) {
+            // الفلترة بالتصنيف والكلمة المفتاحية
+            const matchCategory = !categoryFilter || data.category.trim() === categoryFilter.trim();
+            const matchKeyword = !keyword || data.name.toLowerCase().includes(keyword) || (data.description && data.description.toLowerCase().includes(keyword));
+
+            if (matchCategory && matchKeyword) {
+                hasData = true;
                 const card = document.createElement('div');
-                card.className = 'service-card';
+                card.style.cssText = "background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #eee;";
                 card.innerHTML = `
-                    <h3>${data.name}</h3>
-                    <p class="category-badge"><strong>التصنيف:</strong> ${data.category}</p>
-                    <p><strong>المنطقة:</strong> ${data.region}</p>
-                    <p>${data.description || 'لا يوجد وصف متاح.'}</p>
-                    <div class="contact-buttons" style="margin-top:10px;">
-                        <a href="tel:${data.phone}" class="btn" style="background:#28a745; color:#fff; padding:5px 10px; border-radius:4px; text-decoration:none;">اتصال: ${data.phone}</a>
-                        ${data.whatsapp ? `<a href="https://wa.me/${data.whatsapp}" target="_blank" class="btn" style="background:#25D366; color:#fff; padding:5px 10px; border-radius:4px; text-decoration:none; margin-right:5px;">واتساب</a>` : ''}
+                    <h3 style="margin-top:0; color:#0056b3;">${data.name}</h3>
+                    <p style="margin:5px 0; background:#e9ecef; display:inline-block; padding:3px 8px; border-radius:4px; font-size:14px;"><strong>التصنيف:</strong> ${data.category}</p>
+                    <p style="margin:5px 0; font-size:14px;"><strong>المنطقة:</strong> ${data.region}</p>
+                    <p style="margin:10px 0; color:#555;">${data.description || 'لا يوجد وصف متاح.'}</p>
+                    <div style="margin-top:15px; display:flex; gap:10px;">
+                        <a href="tel:${data.phone}" style="background:#28a745; color:#fff; padding:8px 12px; border-radius:5px; text-decoration:none; font-size:14px;">اتصال: ${data.phone}</a>
+                        ${data.whatsapp ? `<a href="https://wa.me/${data.whatsapp}" target="_blank" style="background:#25D366; color:#fff; padding:8px 12px; border-radius:5px; text-decoration:none; font-size:14px;">واتساب</a>` : ''}
                     </div>
                 `;
                 servicesContainer.appendChild(card);
             }
         });
 
+        if (!hasData) {
+            servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1; color:#777;">لا توجد خدمات معتمدة حالياً في هذا التصنيف.</p>';
+        }
+
     } catch (error) {
         console.error("خطأ في جلب البيانات:", error);
-        servicesContainer.innerHTML = '<p style="text-align:center; width:100%;">حدث خطأ أثناء تحميل الخدمات.</p>';
+        servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1; color:red;">حدث خطأ أثناء تحميل الخدمات.</p>';
     }
 }
 
-// 2. إرسال الخدمة الجديدة بحالة "pending" (تحت المراجعة)
+// حفظ الخدمة بحالة pending
 if (serviceForm) {
     serviceForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -104,7 +106,7 @@ if (serviceForm) {
                 phone: phone,
                 whatsapp: whatsapp || phone,
                 description: description,
-                status: "pending", // تحفظ كمعلقة لحين موافقتك عليها من الفايربيس
+                status: "pending",
                 createdAt: serverTimestamp()
             });
 
@@ -112,7 +114,7 @@ if (serviceForm) {
             serviceForm.reset();
 
         } catch (error) {
-            console.error("خطأ أثناء إرسال البيانات: ", error);
+            console.error("خطأ في الإرسال: ", error);
             alert('حدث خطأ، يرجى المحاولة لاحقاً.');
         } finally {
             submitBtn.disabled = false;
@@ -121,7 +123,7 @@ if (serviceForm) {
     });
 }
 
-// 3. تفعيل البحث
+// البحث
 if (btnSearch) {
     btnSearch.addEventListener('click', () => {
         const selectedRegion = regionSelect ? regionSelect.value : null;
@@ -130,18 +132,22 @@ if (btnSearch) {
     });
 }
 
-// 4. تفعيل الضغط على كروت المهن/التصنيفات
-document.querySelectorAll('.category-card, .category-item').forEach(card => {
-    card.addEventListener('click', () => {
-        const categoryName = card.querySelector('h3, span, p')?.innerText.trim();
-        if (categoryName) {
-            loadApprovedServices(categoryName);
-            window.scrollTo({ top: servicesContainer?.offsetTop - 100 || 0, behavior: 'smooth' });
-        }
-    });
-});
-
-// تحميل الخدمات المقبولة تلقائياً عند فتح الصفحة
+// ربط الضغط على كروت المهن
 document.addEventListener('DOMContentLoaded', () => {
     loadApprovedServices();
+
+    const categoryCards = document.querySelectorAll('.category-card, [class*="category"]');
+    categoryCards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => {
+            const h3 = card.querySelector('h3, span, div');
+            if (h3) {
+                const categoryText = h3.innerText.trim();
+                loadApprovedServices(categoryText);
+                if (servicesContainer) {
+                    servicesContainer.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
 });
