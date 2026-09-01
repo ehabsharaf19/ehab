@@ -38,9 +38,9 @@
                     <i class="fa-solid fa-location-dot"></i>
                     <select id="search-region">
                         <option value="">كل المناطق (رشيد، مطوبس...)</option>
-                        <option value="rashid">رشيد</option>
-                        <option value="metoubes">مطوبس</option>
-                        <option value="villages">القرى والضواحي</option>
+                        <option value="رشيد">رشيد</option>
+                        <option value="مطوبس">مطوبس</option>
+                        <option value="القرى والضواحي">القرى والضواحي</option>
                     </select>
                 </div>
                 <div class="search-input">
@@ -57,54 +57,64 @@
             <h2 class="section-title">التصنيفات الرئيسية</h2>
             <div class="categories-grid">
                 
-                <div class="category-card cat-paint">
+                <div class="category-card cat-paint" data-category="نجارة وديكور ونقاشة">
                     <div class="icon"><i class="fa-solid fa-paint-roller"></i></div>
                     <h3>نجارة وديكور ونقاشة</h3>
                     <span>حرفيون متخصصون</span>
                 </div>
 
-                <div class="category-card cat-plumb">
+                <div class="category-card cat-plumb" data-category="سباكة وكهرباء">
                     <div class="icon"><i class="fa-solid fa-faucet-drip"></i></div>
                     <h3>سباكة وكهرباء</h3>
                     <span>صيانة وتأسيس</span>
                 </div>
 
-                <div class="category-card cat-doctor">
+                <div class="category-card cat-doctor" data-category="أطباء ومراكز طبية">
                     <div class="icon"><i class="fa-solid fa-user-doctor"></i></div>
                     <h3>أطباء ومراكز طبية</h3>
                     <span>عيادات ومستشفيات</span>
                 </div>
 
-                <div class="category-card cat-pharmacy">
+                <div class="category-card cat-pharmacy" data-category="صيدليات ونوبتجيات">
                     <div class="icon"><i class="fa-solid fa-pills"></i></div>
                     <h3>صيدليات ونوبتجيات</h3>
                     <span>خدمة 24 ساعة</span>
                 </div>
 
-                <div class="category-card cat-trans">
+                <div class="category-card cat-trans" data-category="مواصلات رحلات ونقل">
                     <div class="icon"><i class="fa-solid fa-bus"></i></div>
                     <h3>مواصلات رحلات ونقل</h3>
                     <span>سيارات ونقل ثقيل</span>
                 </div>
 
-                <div class="category-card cat-repair">
+                <div class="category-card cat-repair" data-category="صيانة أجهزة منزلية">
                     <div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
                     <h3>صيانة أجهزة منزلية</h3>
                     <span>غسالات، ثلاجات، تكييف</span>
                 </div>
 
-                <div class="category-card cat-shop">
+                <div class="category-card cat-shop" data-category="محلات وأسواق محلية">
                     <div class="icon"><i class="fa-solid fa-store"></i></div>
                     <h3>محلات وأسواق محلية</h3>
                     <span>تجارة ومستلزمات</span>
                 </div>
 
-                <div class="category-card cat-farm">
+                <div class="category-card cat-farm" data-category="زراعة وخدمات ريفية">
                     <div class="icon"><i class="fa-solid fa-wheat-awn"></i></div>
                     <h3>زراعة وخدمات ريفية</h3>
                     <span>معدات وعلافة</span>
                 </div>
 
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم نتائج عرض الخدمات المعروضة -->
+    <section class="services-results-section" id="results-section" style="padding: 40px 0; background: #f8f9fa;">
+        <div class="container">
+            <h2 class="section-title" style="text-align: center; margin-bottom: 25px;">دليل الخدمات المتاحة</h2>
+            <div id="servicesContainer" class="services-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+                <!-- تُعرض الخدمات المقبولة هنا ديناميكياً بواسطة JavaScript -->
             </div>
         </div>
     </section>
@@ -126,21 +136,24 @@
                             <label>التصنيف الرئيسي</label>
                             <select required>
                                 <option value="">اختر التصنيف</option>
-                                <option value="paint">نقاشة وديكور</option>
-                                <option value="plumb">سباكة وكهرباء</option>
-                                <option value="doctor">أطباء وعيادات</option>
-                                <option value="repair">صيانة أجهزة</option>
-                                <option value="trans">مواصلات ونقل</option>
-                                <option value="other">أخرى</option>
+                                <option value="نجارة وديكور ونقاشة">نجارة وديكور ونقاشة</option>
+                                <option value="سباكة وكهرباء">سباكة وكهرباء</option>
+                                <option value="أطباء ومراكز طبية">أطباء ومراكز طبية</option>
+                                <option value="صيدليات ونوبتجيات">صيدليات ونوبتجيات</option>
+                                <option value="مواصلات رحلات ونقل">مواصلات رحلات ونقل</option>
+                                <option value="صيانة أجهزة منزلية">صيانة أجهزة منزلية</option>
+                                <option value="محلات وأسواق محلية">محلات وأسواق محلية</option>
+                                <option value="زراعة وخدمات ريفية">زراعة وخدمات ريفية</option>
+                                <option value="أخرى">أخرى</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>المنطقة / المدينة</label>
                             <select required>
                                 <option value="">اختر المنطقة</option>
-                                <option value="rashid">رشيد</option>
-                                <option value="metoubes">مطوبس</option>
-                                <option value="village">القرى المجاورة</option>
+                                <option value="رشيد">رشيد</option>
+                                <option value="مطوبس">مطوبس</option>
+                                <option value="القرى والضواحي">القرى والضواحي</option>
                             </select>
                         </div>
                     </div>
@@ -173,5 +186,7 @@
         </div>
     </footer>
 
+    <!-- ربط ملف JavaScript المسؤول عن Firebase والتفاعل -->
+    <script type="module" src="app.js"></script>
 </body>
 </html>
