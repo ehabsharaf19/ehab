@@ -6,6 +6,8 @@ import {
     serverTimestamp, 
     query, 
     where, 
+    orderBy,
+    limit,
     getDocs 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -29,16 +31,28 @@ const regionSelect = document.getElementById('search-region');
 const keywordInput = document.getElementById('search-keyword');
 const resultsTitle = document.getElementById('results-title');
 
-// عرض الخدمات المقبولة فقط للزوار
+// جلب الخدمات المعتمدة (أحدث 6 في الرئيسية، أو الكل عند الفلترة)
 async function loadApprovedServices(categoryFilter = null, regionFilter = null, keywordFilter = "") {
     if (!servicesContainer) return;
     
     servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1;">جاري التحميل...</p>';
 
     try {
-        const q = query(collection(db, "services"), where("status", "==", "approved"));
+        let q;
+        // لو مفيش فلترة، نعرض أحدث 6 خدمات فقط عشان الصفحة تكون سريعة
+        if (!categoryFilter && !regionFilter && !keywordFilter) {
+            q = query(
+                collection(db, "services"), 
+                where("status", "==", "approved"),
+                orderBy("createdAt", "desc"),
+                limit(6)
+            );
+        } else {
+            // لو الزائر بيختار حرفة معينة أو بيأوت في منطقة، نجيب له كل النتائج الخاصة بالحرفة دي
+            q = query(collection(db, "services"), where("status", "==", "approved"));
+        }
+
         const querySnapshot = await getDocs(q);
-        
         servicesContainer.innerHTML = '';
         let hasData = false;
 
@@ -78,7 +92,7 @@ async function loadApprovedServices(categoryFilter = null, regionFilter = null, 
     }
 }
 
-// إضافة خدمة جديدة (حفظ بحالة المعاينة pending)
+// تسجيل خدمة جديدة بحالة pending
 if (serviceForm) {
     serviceForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -106,7 +120,7 @@ if (serviceForm) {
                 createdAt: serverTimestamp()
             });
 
-            alert('تم إرسال البيانات بنجاح! ستظهر الخدمة فور اعتمادها من الإدارة.');
+            alert('تم إرسال بياناتك بنجاح! ستظهر الخدمة فور اعتمادها من لوحة الإدارة.');
             serviceForm.reset();
 
         } catch (error) {
@@ -130,9 +144,9 @@ if (btnSearch) {
     });
 }
 
-// عند الضغط على كروت المهن
+// التفاعل مع كروت المهن
 document.addEventListener('DOMContentLoaded', () => {
-    loadApprovedServices(); // عرض جميع المعروضين المعتمدين في البداية
+    loadApprovedServices();
 
     const categoryCards = document.querySelectorAll('.category-card');
     categoryCards.forEach(card => {
