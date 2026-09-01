@@ -6,8 +6,6 @@ import {
     serverTimestamp, 
     query, 
     where, 
-    orderBy,
-    limit,
     getDocs 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -31,30 +29,17 @@ const regionSelect = document.getElementById('search-region');
 const keywordInput = document.getElementById('search-keyword');
 const resultsTitle = document.getElementById('results-title');
 
-// جلب الخدمات المعتمدة (أحدث 6 في الرئيسية، أو الكل عند الفلترة)
+// عرض أحدث 6 في الرئيسية، وعرض الكل داخل الحرفة أو عند البحث
 async function loadApprovedServices(categoryFilter = null, regionFilter = null, keywordFilter = "") {
     if (!servicesContainer) return;
     
-    servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1;">جاري التحميل...</p>';
+    servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1;">جاري تحميل البيانات...</p>';
 
     try {
-        let q;
-        // لو مفيش فلترة، نعرض أحدث 6 خدمات فقط عشان الصفحة تكون سريعة
-        if (!categoryFilter && !regionFilter && !keywordFilter) {
-            q = query(
-                collection(db, "services"), 
-                where("status", "==", "approved"),
-                orderBy("createdAt", "desc"),
-                limit(6)
-            );
-        } else {
-            // لو الزائر بيختار حرفة معينة أو بيأوت في منطقة، نجيب له كل النتائج الخاصة بالحرفة دي
-            q = query(collection(db, "services"), where("status", "==", "approved"));
-        }
-
+        const q = query(collection(db, "services"), where("status", "==", "approved"));
         const querySnapshot = await getDocs(q);
-        servicesContainer.innerHTML = '';
-        let hasData = false;
+        
+        let allApprovedList = [];
 
         querySnapshot.forEach((doc) => {
             const data = doc.data();
@@ -65,26 +50,45 @@ async function loadApprovedServices(categoryFilter = null, regionFilter = null, 
             const matchKeyword = !keyword || (data.name && data.name.toLowerCase().includes(keyword)) || (data.description && data.description.toLowerCase().includes(keyword));
 
             if (matchCategory && matchRegion && matchKeyword) {
-                hasData = true;
-                const card = document.createElement('div');
-                card.style.cssText = "background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;";
-                card.innerHTML = `
-                    <h3 style="margin-top:0; color:#0056b3; font-size: 20px;">${data.name}</h3>
-                    <p style="margin:6px 0; background:#e0f2fe; color:#0369a1; display:inline-block; padding:4px 10px; border-radius:20px; font-size:13px; font-weight:bold;">${data.category}</p>
-                    <p style="margin:8px 0; font-size:14px; color:#475569;"><i class="fa-solid fa-location-dot"></i> <strong>المنطقة:</strong> ${data.region}</p>
-                    <p style="margin:10px 0; color:#334155; line-height: 1.5;">${data.description || 'لا يوجد وصف متاح.'}</p>
-                    <div style="margin-top:15px; display:flex; gap:10px; flex-wrap: wrap;">
-                        <a href="tel:${data.phone}" style="background:#16a34a; color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:14px; font-weight:bold;"><i class="fa-solid fa-phone"></i> اتصال</a>
-                        ${data.whatsapp ? `<a href="https://wa.me/${data.whatsapp}" target="_blank" style="background:#25D366; color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:14px; font-weight:bold;"><i class="fa-brands fa-whatsapp"></i> واتساب</a>` : ''}
-                    </div>
-                `;
-                servicesContainer.appendChild(card);
+                allApprovedList.push(data);
             }
         });
 
-        if (!hasData) {
-            servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1; color:#64748b; font-size: 16px; padding: 30px 0;">لا توجد خدمات مضافة حالياً في هذا التصنيف.</p>';
+        // ترتيب الأحدث أولاً
+        allApprovedList.sort((a, b) => {
+            const timeA = a.createdAt ? a.createdAt.seconds : 0;
+            const timeB = b.createdAt ? b.createdAt.seconds : 0;
+            return timeB - timeA;
+        });
+
+        // إذا كنا في الصفحة الرئيسية (بدون اختيار حرفة أو بحث)، نأخذ أحدث 6 خدمات فقط
+        let displayList = allApprovedList;
+        if (!categoryFilter && !regionFilter && !keywordFilter) {
+            displayList = allApprovedList.slice(0, 6);
         }
+
+        servicesContainer.innerHTML = '';
+
+        if (displayList.length === 0) {
+            servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1; color:#64748b; font-size: 16px; padding: 30px 0;">لا توجد خدمات مضافة حالياً في هذا التصنيف.</p>';
+            return;
+        }
+
+        displayList.forEach((data) => {
+            const card = document.createElement('div');
+            card.style.cssText = "background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;";
+            card.innerHTML = `
+                <h3 style="margin-top:0; color:#0056b3; font-size: 20px;">${data.name}</h3>
+                <p style="margin:6px 0; background:#e0f2fe; color:#0369a1; display:inline-block; padding:4px 10px; border-radius:20px; font-size:13px; font-weight:bold;">${data.category}</p>
+                <p style="margin:8px 0; font-size:14px; color:#475569;"><i class="fa-solid fa-location-dot"></i> <strong>المنطقة:</strong> ${data.region}</p>
+                <p style="margin:10px 0; color:#334155; line-height: 1.5;">${data.description || 'لا يوجد وصف متاح.'}</p>
+                <div style="margin-top:15px; display:flex; gap:10px; flex-wrap: wrap;">
+                    <a href="tel:${data.phone}" style="background:#16a34a; color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:14px; font-weight:bold;"><i class="fa-solid fa-phone"></i> اتصال</a>
+                    ${data.whatsapp ? `<a href="https://wa.me/${data.whatsapp}" target="_blank" style="background:#25D366; color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:14px; font-weight:bold;"><i class="fa-brands fa-whatsapp"></i> واتساب</a>` : ''}
+                </div>
+            `;
+            servicesContainer.appendChild(card);
+        });
 
     } catch (error) {
         console.error("خطأ في جلب البيانات:", error);
@@ -92,7 +96,7 @@ async function loadApprovedServices(categoryFilter = null, regionFilter = null, 
     }
 }
 
-// تسجيل خدمة جديدة بحالة pending
+// إرسال الخدمة
 if (serviceForm) {
     serviceForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -144,7 +148,7 @@ if (btnSearch) {
     });
 }
 
-// التفاعل مع كروت المهن
+// التفاعل مع الحرف
 document.addEventListener('DOMContentLoaded', () => {
     loadApprovedServices();
 
