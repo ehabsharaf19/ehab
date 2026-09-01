@@ -4,6 +4,8 @@ import {
     collection, 
     addDoc, 
     serverTimestamp, 
+    query, 
+    where, 
     getDocs 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -27,23 +29,23 @@ const regionSelect = document.getElementById('search-region');
 const keywordInput = document.getElementById('search-keyword');
 const resultsTitle = document.getElementById('results-title');
 
-// جلب وعرض الخدمات المتاحة
-async function loadServices(categoryFilter = null, regionFilter = null, keywordFilter = "") {
+// عرض الخدمات المقبولة فقط للزوار
+async function loadApprovedServices(categoryFilter = null, regionFilter = null, keywordFilter = "") {
     if (!servicesContainer) return;
     
-    servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1;">جاري تحميل الخدمات...</p>';
+    servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1;">جاري التحميل...</p>';
 
     try {
-        const querySnapshot = await getDocs(collection(db, "services"));
+        const q = query(collection(db, "services"), where("status", "==", "approved"));
+        const querySnapshot = await getDocs(q);
+        
         servicesContainer.innerHTML = '';
-
         let hasData = false;
 
         querySnapshot.forEach((doc) => {
             const data = doc.data();
             const keyword = keywordFilter.toLowerCase();
             
-            // فلترة دقيقة للمهن والجهات
             const matchCategory = !categoryFilter || (data.category && data.category.trim() === categoryFilter.trim());
             const matchRegion = !regionFilter || (data.region && data.region.trim() === regionFilter.trim());
             const matchKeyword = !keyword || (data.name && data.name.toLowerCase().includes(keyword)) || (data.description && data.description.toLowerCase().includes(keyword));
@@ -67,16 +69,16 @@ async function loadServices(categoryFilter = null, regionFilter = null, keywordF
         });
 
         if (!hasData) {
-            servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1; color:#64748b; font-size: 16px;">لا توجد خدمات مضافة حالياً في هذا التصنيف.</p>';
+            servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1; color:#64748b; font-size: 16px; padding: 30px 0;">لا توجد خدمات مضافة حالياً في هذا التصنيف.</p>';
         }
 
     } catch (error) {
         console.error("خطأ في جلب البيانات:", error);
-        servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1; color:red;">حدث خطأ أثناء تحميل الخدمات.</p>';
+        servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1; color:red;">حدث خطأ أثناء تحميل البيانات.</p>';
     }
 }
 
-// إرسال الخدمة وحفظها مباشرة
+// إضافة خدمة جديدة (حفظ بحالة المعاينة pending)
 if (serviceForm) {
     serviceForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -100,13 +102,12 @@ if (serviceForm) {
                 phone: phone,
                 whatsapp: whatsapp || phone,
                 description: description,
-                status: "approved",
+                status: "pending",
                 createdAt: serverTimestamp()
             });
 
-            alert('تم نشر خدمتك بنجاح ومتاحة للجميع الآن!');
+            alert('تم إرسال البيانات بنجاح! ستظهر الخدمة فور اعتمادها من الإدارة.');
             serviceForm.reset();
-            loadServices(); // تحديث العرض فوراً
 
         } catch (error) {
             console.error("خطأ في الإرسال: ", error);
@@ -118,20 +119,20 @@ if (serviceForm) {
     });
 }
 
-// البحث عند إدخال النص والمنطقة
+// البحث
 if (btnSearch) {
     btnSearch.addEventListener('click', () => {
         const selectedRegion = regionSelect ? regionSelect.value : null;
         const keyword = keywordInput ? keywordInput.value.trim() : "";
         if (resultsTitle) resultsTitle.innerText = "نتائج البحث";
-        loadServices(null, selectedRegion, keyword);
+        loadApprovedServices(null, selectedRegion, keyword);
         document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
     });
 }
 
-// التفاعل عند الضغط على الكروت (النقاشة، النجارة، السباكة...)
+// عند الضغط على كروت المهن
 document.addEventListener('DOMContentLoaded', () => {
-    loadServices();
+    loadApprovedServices(); // عرض جميع المعروضين المعتمدين في البداية
 
     const categoryCards = document.querySelectorAll('.category-card');
     categoryCards.forEach(card => {
@@ -140,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const catName = card.getAttribute('data-category');
             if (catName) {
                 if (resultsTitle) resultsTitle.innerText = `خدمات قسم: ${catName}`;
-                loadServices(catName);
+                loadApprovedServices(catName);
                 document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
             }
         });
