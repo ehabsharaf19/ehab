@@ -4,8 +4,6 @@ import {
     collection, 
     addDoc, 
     serverTimestamp, 
-    query, 
-    where, 
     getDocs 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -27,21 +25,16 @@ const serviceForm = document.getElementById('serviceForm');
 const btnSearch = document.querySelector('.btn-search');
 const regionSelect = document.getElementById('search-region');
 const keywordInput = document.getElementById('search-keyword');
+const resultsTitle = document.getElementById('results-title');
 
-// جلب وعرض الخدمات المقبولة
-async function loadApprovedServices(categoryFilter = null, regionFilter = null, keywordFilter = "") {
+// جلب وعرض الخدمات المتاحة
+async function loadServices(categoryFilter = null, regionFilter = null, keywordFilter = "") {
     if (!servicesContainer) return;
     
     servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1;">جاري تحميل الخدمات...</p>';
 
     try {
-        let q = query(collection(db, "services"), where("status", "==", "approved"));
-
-        if (regionFilter) {
-            q = query(q, where("region", "==", regionFilter));
-        }
-
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(collection(db, "services"));
         servicesContainer.innerHTML = '';
 
         let hasData = false;
@@ -50,22 +43,23 @@ async function loadApprovedServices(categoryFilter = null, regionFilter = null, 
             const data = doc.data();
             const keyword = keywordFilter.toLowerCase();
             
-            // الفلترة بالتصنيف والكلمة المفتاحية
-            const matchCategory = !categoryFilter || data.category.trim() === categoryFilter.trim();
-            const matchKeyword = !keyword || data.name.toLowerCase().includes(keyword) || (data.description && data.description.toLowerCase().includes(keyword));
+            // فلترة دقيقة للمهن والجهات
+            const matchCategory = !categoryFilter || (data.category && data.category.trim() === categoryFilter.trim());
+            const matchRegion = !regionFilter || (data.region && data.region.trim() === regionFilter.trim());
+            const matchKeyword = !keyword || (data.name && data.name.toLowerCase().includes(keyword)) || (data.description && data.description.toLowerCase().includes(keyword));
 
-            if (matchCategory && matchKeyword) {
+            if (matchCategory && matchRegion && matchKeyword) {
                 hasData = true;
                 const card = document.createElement('div');
-                card.style.cssText = "background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #eee;";
+                card.style.cssText = "background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #e2e8f0;";
                 card.innerHTML = `
-                    <h3 style="margin-top:0; color:#0056b3;">${data.name}</h3>
-                    <p style="margin:5px 0; background:#e9ecef; display:inline-block; padding:3px 8px; border-radius:4px; font-size:14px;"><strong>التصنيف:</strong> ${data.category}</p>
-                    <p style="margin:5px 0; font-size:14px;"><strong>المنطقة:</strong> ${data.region}</p>
-                    <p style="margin:10px 0; color:#555;">${data.description || 'لا يوجد وصف متاح.'}</p>
-                    <div style="margin-top:15px; display:flex; gap:10px;">
-                        <a href="tel:${data.phone}" style="background:#28a745; color:#fff; padding:8px 12px; border-radius:5px; text-decoration:none; font-size:14px;">اتصال: ${data.phone}</a>
-                        ${data.whatsapp ? `<a href="https://wa.me/${data.whatsapp}" target="_blank" style="background:#25D366; color:#fff; padding:8px 12px; border-radius:5px; text-decoration:none; font-size:14px;">واتساب</a>` : ''}
+                    <h3 style="margin-top:0; color:#0056b3; font-size: 20px;">${data.name}</h3>
+                    <p style="margin:6px 0; background:#e0f2fe; color:#0369a1; display:inline-block; padding:4px 10px; border-radius:20px; font-size:13px; font-weight:bold;">${data.category}</p>
+                    <p style="margin:8px 0; font-size:14px; color:#475569;"><i class="fa-solid fa-location-dot"></i> <strong>المنطقة:</strong> ${data.region}</p>
+                    <p style="margin:10px 0; color:#334155; line-height: 1.5;">${data.description || 'لا يوجد وصف متاح.'}</p>
+                    <div style="margin-top:15px; display:flex; gap:10px; flex-wrap: wrap;">
+                        <a href="tel:${data.phone}" style="background:#16a34a; color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:14px; font-weight:bold;"><i class="fa-solid fa-phone"></i> اتصال</a>
+                        ${data.whatsapp ? `<a href="https://wa.me/${data.whatsapp}" target="_blank" style="background:#25D366; color:#fff; padding:8px 14px; border-radius:6px; text-decoration:none; font-size:14px; font-weight:bold;"><i class="fa-brands fa-whatsapp"></i> واتساب</a>` : ''}
                     </div>
                 `;
                 servicesContainer.appendChild(card);
@@ -73,7 +67,7 @@ async function loadApprovedServices(categoryFilter = null, regionFilter = null, 
         });
 
         if (!hasData) {
-            servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1; color:#777;">لا توجد خدمات معتمدة حالياً في هذا التصنيف.</p>';
+            servicesContainer.innerHTML = '<p style="text-align:center; width:100%; grid-column: 1/-1; color:#64748b; font-size: 16px;">لا توجد خدمات مضافة حالياً في هذا التصنيف.</p>';
         }
 
     } catch (error) {
@@ -82,17 +76,17 @@ async function loadApprovedServices(categoryFilter = null, regionFilter = null, 
     }
 }
 
-// حفظ الخدمة بحالة pending
+// إرسال الخدمة وحفظها مباشرة
 if (serviceForm) {
     serviceForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const name = serviceForm.querySelector('input[placeholder*="أحمد"]').value.trim();
-        const category = serviceForm.querySelectorAll('select')[0].value;
-        const region = serviceForm.querySelectorAll('select')[1].value;
-        const phone = serviceForm.querySelectorAll('input[type="tel"]')[0].value.trim();
-        const whatsapp = serviceForm.querySelectorAll('input[type="tel"]')[1].value.trim();
-        const description = serviceForm.querySelector('textarea').value.trim();
+        const name = document.getElementById('form-name').value.trim();
+        const category = document.getElementById('form-category').value;
+        const region = document.getElementById('form-region').value;
+        const phone = document.getElementById('form-phone').value.trim();
+        const whatsapp = document.getElementById('form-whatsapp').value.trim();
+        const description = document.getElementById('form-description').value.trim();
 
         const submitBtn = serviceForm.querySelector('.btn-submit');
         submitBtn.disabled = true;
@@ -106,47 +100,48 @@ if (serviceForm) {
                 phone: phone,
                 whatsapp: whatsapp || phone,
                 description: description,
-                status: "pending",
+                status: "approved",
                 createdAt: serverTimestamp()
             });
 
-            alert('تم إرسال خدمتك بنجاح! ستظهر على المنصة فور مراجعتها وإقرارها من الإدارة.');
+            alert('تم نشر خدمتك بنجاح ومتاحة للجميع الآن!');
             serviceForm.reset();
+            loadServices(); // تحديث العرض فوراً
 
         } catch (error) {
             console.error("خطأ في الإرسال: ", error);
             alert('حدث خطأ، يرجى المحاولة لاحقاً.');
         } finally {
             submitBtn.disabled = false;
-            submitBtn.innerText = 'إرسال الخدمة للمراجعة والنشر';
+            submitBtn.innerText = 'إرسال الخدمة للنشر';
         }
     });
 }
 
-// البحث
+// البحث عند إدخال النص والمنطقة
 if (btnSearch) {
     btnSearch.addEventListener('click', () => {
         const selectedRegion = regionSelect ? regionSelect.value : null;
         const keyword = keywordInput ? keywordInput.value.trim() : "";
-        loadApprovedServices(null, selectedRegion, keyword);
+        if (resultsTitle) resultsTitle.innerText = "نتائج البحث";
+        loadServices(null, selectedRegion, keyword);
+        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
     });
 }
 
-// ربط الضغط على كروت المهن
+// التفاعل عند الضغط على الكروت (النقاشة، النجارة، السباكة...)
 document.addEventListener('DOMContentLoaded', () => {
-    loadApprovedServices();
+    loadServices();
 
-    const categoryCards = document.querySelectorAll('.category-card, [class*="category"]');
+    const categoryCards = document.querySelectorAll('.category-card');
     categoryCards.forEach(card => {
         card.style.cursor = 'pointer';
         card.addEventListener('click', () => {
-            const h3 = card.querySelector('h3, span, div');
-            if (h3) {
-                const categoryText = h3.innerText.trim();
-                loadApprovedServices(categoryText);
-                if (servicesContainer) {
-                    servicesContainer.scrollIntoView({ behavior: 'smooth' });
-                }
+            const catName = card.getAttribute('data-category');
+            if (catName) {
+                if (resultsTitle) resultsTitle.innerText = `خدمات قسم: ${catName}`;
+                loadServices(catName);
+                document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
