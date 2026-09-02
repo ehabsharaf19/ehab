@@ -81,13 +81,8 @@
                         <option value="">كل المناطق والقرى...</option>
                         <option value="رشيد">مدينة رشيد</option>
                         <option value="مطوبس">مدينة مطوبس</option>
-                        <option value="برج رشيد">برج رشيد</option>
                         <option value="خان الجني">خان الجني</option>
                         <option value="الجزيرة الخضراء">الجزيرة الخضراء</option>
-                        <option value="برج مغيزل">برج مغيزل</option>
-                        <option value="الوقف">الوقف</option>
-                        <option value="ابو خشبة">ابو خشبة</option>
-                        <option value="الهردة">الهردة</option>
                         <option value="الجدية">الجدية</option>
                         <option value="معدية رشيد">معدية رشيد</option>
                         <option value="برمبال">برمبال</option>
@@ -100,7 +95,7 @@
                 </div>
                 <div class="search-input">
                     <i class="fa-solid fa-wrench"></i>
-                    <input type="text" id="search-keyword" placeholder="عن ماذا تبحث؟ (شبكات، كاميرات، حدادة، نقاش...)">
+                    <input type="text" id="search-keyword" placeholder="عن ماذا تبحث؟ (بناء، جبس بورد، محارة، شبكات، نقاش...)">
                 </div>
                 <button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i> بحث</button>
             </div>
@@ -113,10 +108,22 @@
             <h2 class="section-title">التصنيفات الرئيسية</h2>
             <div class="categories-grid">
                 
-                <div class="category-card cat-paint" data-category="نجارة وديكور ونقاشة">
+                <div class="category-card cat-building" data-category="بناء ومعمار وجبس ومحارة" style="background: #fff7ed; border: 1px solid #fed7aa;">
+                    <div class="icon" style="color: #c2410c;"><i class="fa-solid fa-helmet-safety"></i></div>
+                    <h3>بناء ومعمار وجبس ومحارة</h3>
+                    <span>بناء، محارة، وجبس بورد</span>
+                </div>
+
+                <div class="category-card cat-paint" data-category="ديكور ونقاشة">
                     <div class="icon"><i class="fa-solid fa-paint-roller"></i></div>
-                    <h3>نجارة وديكور ونقاشة</h3>
+                    <h3>ديكور ونقاشة</h3>
                     <span>تشطيبات ودهانات</span>
+                </div>
+
+                <div class="category-card cat-carpentry" data-category="نجارة" style="background: #fef3c7; border: 1px solid #fde68a;">
+                    <div class="icon" style="color: #d97706;"><i class="fa-solid fa-hammer"></i></div>
+                    <h3>نجارة</h3>
+                    <span>موبيليات وأبواب وصيانة</span>
                 </div>
 
                 <div class="category-card cat-plumb" data-category="سباكة وكهرباء">
@@ -135,6 +142,30 @@
                     <div class="icon" style="color: #475569;"><i class="fa-solid fa-screwdriver-wrench"></i></div>
                     <h3>حدادة وكيرتيلات وألوميتال</h3>
                     <span>ورش تصنيع وصيانة</span>
+                </div>
+
+                <div class="category-card cat-mobile" data-category="خدمات المحمول وأجهزة الكمبيوتر" style="background: #f0fdf4; border: 1px solid #bbf7d0;">
+                    <div class="icon" style="color: #16a34a;"><i class="fa-solid fa-laptop-code"></i></div>
+                    <h3>محمول وكمبيوتر</h3>
+                    <span>صيانة وسوفت وير ومستلزمات</span>
+                </div>
+
+                <div class="category-card cat-curtains" data-category="ستاير وتنجيد ركنيات" style="background: #fef2f2; border: 1px solid #fecaca;">
+                    <div class="icon" style="color: #dc2626;"><i class="fa-solid fa-couch"></i></div>
+                    <h3>ستاير وتنجيد ركنيات</h3>
+                    <span>تنجيد وتفصيل ستاير</span>
+                </div>
+
+                <div class="category-card cat-events" data-category="خدمات الحفلات من الفراشه للبوفيه" style="background: #fdf2f8; border: 1px solid #fbcfe8;">
+                    <div class="icon" style="color: #db2777;"><i class="fa-solid fa-champagne-glasses"></i></div>
+                    <h3>خدمات الحفلات والمناسبات</h3>
+                    <span>فراشة، بوفيه، وتجهيز أفراح</span>
+                </div>
+
+                <div class="category-card cat-ads" data-category="اعلانات ودعاية" style="background: #faf5ff; border: 1px solid #e9d5ff;">
+                    <div class="icon" style="color: #9333ea;"><i class="fa-solid fa-bullhorn"></i></div>
+                    <h3>إعلانات ودعاية</h3>
+                    <span>مطابع، لافتات، وتسويق</span>
                 </div>
 
                 <div class="category-card cat-doctor" data-category="أطباء ومراكز طبية">
@@ -202,8 +233,8 @@
 
                 <form id="serviceForm">
                     <div class="form-group">
-                        <label>الاسم بالكامل / اسم المحل أو الورشة أو الشركة</label>
-                        <input type="text" id="form-name" required placeholder="مثال: م/ أحمد (مهندس شبكات) أو ورشة النور للكيرتيل">
+                        <label>الاسم بالكامل / اسم المحل أو الورشة أو المقاول</label>
+                        <input type="text" id="form-name" required placeholder="مثال: مقاولات ومباني (أحمد) أو فني جبس بورد">
                     </div>
 
                     <div class="form-row">
@@ -211,10 +242,16 @@
                             <label>التصنيف الرئيسي للمهنة</label>
                             <select id="form-category" required>
                                 <option value="">اختر المهنة بالضبط</option>
+                                <option value="بناء ومعمار وجبس ومحارة">بناء ومعمار وجبس ومحارة (مقاولات وصيانة)</option>
                                 <option value="شبكات ودش وكاميرات مراقبة">شبكات ودش وكاميرات مراقبة (مهندسين وفنيين)</option>
                                 <option value="حدادة وكيرتيلات وألوميتال">حدادة وكيرتيلات وألوميتال (ورش وصيانة)</option>
-                                <option value="نجارة وديكور ونقاشة">نجارة وديكور ونقاشة</option>
+                                <option value="ديكور ونقاشة">ديكور ونقاشة</option>
+                                <option value="نجارة">نجارة</option>
+                                <option value="خدمات المحمول وأجهزة الكمبيوتر">خدمات المحمول وأجهزة الكمبيوتر</option>
+                                <option value="خدمات الحفلات من الفراشه للبوفيه">خدمات الحفلات من الفراشه للبوفيه</option>
+                                <option value="اعلانات ودعاية">اعلانات ودعاية</option>
                                 <option value="سباكة وكهرباء">سباكة وكهرباء</option>
+                                <option value="ستاير وتنجيد ركنيات">ستاير وتنجيد ركنيات</option>
                                 <option value="أطباء ومراكز طبية">أطباء ومراكز طبية</option>
                                 <option value="صيدليات ونوبتجيات">صيدليات ونوبتجيات</option>
                                 <option value="مواصلات رحلات ونقل">مواصلات رحلات ونقل</option>
@@ -257,7 +294,7 @@
 
                     <div class="form-group">
                         <label>تفاصيل الخدمة / الخبرة</label>
-                        <textarea id="form-description" rows="4" placeholder="اكتب تفاصيل الخدمة (مثال: تركيب كاميرات مراقبة، برمجة شبكات، تصنيع كيرتيلات وابواب حديد...)"></textarea>
+                        <textarea id="form-description" rows="4" placeholder="اكتب تفاصيل الخدمة (مثال: بناء أحمر ومعمار، محارة، تركيب جبس بورد، صيانة وتعديل مباني...)"></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit">إرسال الخدمة للنشر</button>
